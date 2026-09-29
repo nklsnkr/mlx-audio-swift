@@ -133,13 +133,6 @@ public enum TTS {
                 pretrained: { try await EchoTTSModel.fromPretrained($0, cache: $1) },
                 local: { modelDir, _ in try await EchoTTSModel.fromModelDirectory(modelDir) }
             )
-        case "irodori_tts", "irodori":
-            return try await load(
-                source,
-                modelType: resolvedType,
-                pretrained: { try await IrodoriTTSModel.fromPretrained($0, cache: $1) },
-                local: { modelDir, _ in try await IrodoriTTSModel.fromModelDirectory(modelDir) }
-            )
         case "qwen3_tts":
             return try await load(
                 source,
