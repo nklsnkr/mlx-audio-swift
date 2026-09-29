@@ -13,6 +13,9 @@ public final class MisakiTextProcessor: TextProcessor, @unchecked Sendable {
     public init() {}
 
     public func prepare() async throws {
+        // Once is enough: Kokoro calls prepare() on every generate, and the
+        // resolver logs and re-scans the cache each time (talkingone patch).
+        if lock.withLock({ resourceDirectory }) != nil { return }
         let dir = try await ModelUtils.resolveOrDownloadModel(
             repoID: Self.g2pRepo,
             requiredExtension: "safetensors"
